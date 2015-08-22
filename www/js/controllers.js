@@ -71,13 +71,15 @@ angular.module('starter.controllers', [])
   $cordovaGeolocation,
   $cordovaDeviceOrientation,
   $timeout,
+  $state,
+  $q,
   station
 ) {
   $scope.station = [];
 
   $scope.location = {
-    latitude: 0,
-    longitude: 0,
+    latitude: 25.039149,
+    longitude: 121.517263,
     heading: 0
   };
 
@@ -86,45 +88,52 @@ angular.module('starter.controllers', [])
     enableHighAccuracy: true
   };
 
-  var watchPosition = function() {
-    $cordovaGeolocation
-      .getCurrentPosition(posOptions)
-      .then(function (position) {
-        $scope.location.latitude = position.coords.latitude;
-        $scope.location.longitude = position.coords.longitude;
-        setTimeout(watchPosition, 3000);
-      }, function(err) {
-        setTimeout(watchPosition, 3000);
-      });
-  };
+  var watchGeo = function() {
+    $q.all({
+      position: $cordovaGeolocation.getCurrentPosition(posOptions),
+      heading: $cordovaDeviceOrientation.getCurrentHeading()
+    })
+    .then(function(reply) {
+      if (reply && reply.position) {
+        $scope.location.latitude = reply.position.coords.latitude;
+        $scope.location.longitude = reply.position.coords.longitude;
+      }
+      if (reply && reply.heading) {
+        $scope.location.heading = reply.heading.trueHeading || reply.heading.magneticHeading;
+      }
 
-  var watchHeading = function() {
-    $cordovaDeviceOrientation
-      .getCurrentHeading()
-      .then(function(result) {
-        // var accuracy = result.headingAccuracy;
-        $scope.location.heading = result.trueHeading || result.magneticHeading;
-        $timeout(watchHeading, 1000);
-      }, function(err) {
-        $timeout(watchHeading, 1000);
-      });
+      if ($state.current.name === 'app.station') {
+        $timeout(watchGeo, 3000);
+      }
+    }, function() {
+      if ($state.current.name === 'app.station') {
+        $timeout(watchGeo, 3000);
+      }
+    });
   };
 
   $scope.doit = function(item) {
 
     var options = {
       title: item.name,
-      buttonLabels: ['查看', '撥打電話', '行人導航'],
+      buttonLabels: ['行人導航'],
       addCancelButtonWithLabel: '取消',
       androidEnableCancelButton : true,
       winphoneEnableCancelButton : true
     };
 
     $cordovaActionSheet.show(options)
-      .then(function(btnIndex) {
-        var index = btnIndex;
+      .then(function(index) {
+        if (index === 1) {
+          launchnavigator.navigate(
+            [item.location.latitude, item.location.longitude],
+            null,
+            function(){},
+            function(error){},
+            {preferGoogleMaps: true}
+          );
+        }
       });
-
   };
 
   $ionicPlatform.ready(function() {
@@ -136,8 +145,7 @@ angular.module('starter.controllers', [])
       $cordovaProgress.hide();
     });
 
-    watchPosition();
-    watchHeading();
+    watchGeo();
   });
 })
 

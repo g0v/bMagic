@@ -28,10 +28,11 @@
       "id": "org.pbernasconi.progressindicator"
     },
     "cordova-plugin-file",
-    "cordova-plugin-whitelist"
+    "cordova-plugin-whitelist",
+    "uk.co.workingedge.phonegap.plugin.launchnavigator"
   ],
   "cordovaPlatforms": [
-    "ios",
-    "android"
+    "android",
+    "ios"
   ]
 }
