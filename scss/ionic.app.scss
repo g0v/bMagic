@@ -1,0 +1,115 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+*/
+
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../lib/ionic/fonts" !default;
+
+// Include all of Ionic
+@import "www/lib/ionic/scss/ionic";
+
+.light {
+  border-radius: 14px;
+  padding: 6px 18px 6px 18px;
+  /*line-height: 45px*/
+  color: white;
+  text-align: center;
+}
+
+.light-full {
+  background-color: #2EBD9B;
+  /*color: #37BD9C*/
+}
+
+.light-medium {
+  background-color: #F7BC33;
+  /*color: #F6BC41*/
+}
+
+.light-empty {
+  background-color: #EF5361;
+  /*color: #E9573E*/
+}
+
+.light-labal {
+  text-align: center;
+}
+
+.item-avatar.item-logo img {
+  border-radius: 0px;
+}
+
+.item.item-position {
+  padding-left: 64px;
+  padding-top: 11px;
+  padding-bottom: 11px;
+  color: #e42012;
+  h2 {
+    color: #e42012;
+  }
+  &.isOpen {
+    color: #28a54c;
+    h2 {
+      color: #28a54c;
+    }
+  }
+  .item-left {
+    position: absolute;
+    left: 11px;
+    top: 7px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    .icon,
+    .item-text-left {
+      position: relative;
+      text-align: center;
+    }
+    .icon {
+      width: 26px;
+      height: 26px;
+      left: auto;
+      &:before {
+        width: 26px;
+        height: 26px;
+        font-size: 26px;
+        line-height: 26px;
+      }
+    }
+    .item-text-left {
+      font-size: 12px;
+      margin-top: 3px;
+    }
+  }
+  h2 {
+    font-size: 16px;
+    line-height: 18px;
+    margin-bottom: 0px;
+  }
+  span {
+    font-size: 10px;
+    line-height: 12px;
+  }
+}
+
+.card .button {
+  padding: 10px;
+  top: 50%;
+  transform:translateY(-50%);
+}

@@ -1,0 +1,16 @@
+<ion-view view-title="附近捐血點">
+  <ion-content>
+    <div class="list">
+      <a class="item item-position item-icon-left item-icon-right" ng-class="{isOpen: item.inService}" href="#" ng-repeat="item in station | distance:location | orderBy:'distance' | inService" ng-click="doit(item)">
+        <div class="item-left">
+          <i class="icon ion-ios-navigate-outline" style="-webkit-transform:rotate({{ item.bearing - 45 }}deg);">
+          </i>
+          <span class="item-text-left">{{ item.distanceDisplay }}</span>
+        </div>
+        <h2>{{ item.name }}</h2>
+        <span>{{ item.serviceDisplay }}</span>
+        <i class="icon ion-chevron-right"></i>
+      </a>
+    </div>
+  </ion-content>
+</ion-view>

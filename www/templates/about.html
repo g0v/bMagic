@@ -1,0 +1,54 @@
+<ion-view view-title="關於治癒之術">
+  <ion-content>
+    <div class="list card">
+      <div class="item item-avatar item-logo">
+        <img src="img/logo_blood.png">
+        <h2>資料來源</h2>
+        <p>台灣血液基金會</p>
+      </div>
+    </div>
+    <div class="list card">
+      <div class="item item-avatar item-logo">
+        <img src="img/logo_g0v.png">
+        <h2>資料處理與串接</h2>
+        <p>g0v.tw 零時政府</p>
+      </div>
+    </div>
+    <div class="list card">
+      <div class="item item-button-right">
+        <h2>血液存量離線資料庫</h2>
+        <p>最後更新：{{ lastServiceStation | date: 'yyyy-MM-dd' }}</p>
+        <button class="button" ng-clic="loadBlood()">
+          <i class="icon ion-archive"></i>
+        </button>
+      </div>
+      <div class="item item-toggle">
+         自動更新
+         <label class="toggle toggle-balanced" ng-click="toggleBlood()">
+           <input type="checkbox" ng-model="autoBlood">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </div>
+    </div>
+    <div class="list card">
+      <div class="item item-button-right">
+        <h2>捐血點離線資料庫</h2>
+        <p>最後更新：{{ lastServiceStation | date: 'yyyy-MM-dd' }}</p>
+        <button class="button" ng-click="loadServiceStation()">
+          <i class="icon ion-archive"></i>
+        </button>
+      </div>
+      <div class="item item-toggle">
+         自動更新
+         <label class="toggle toggle-balanced" ng-click="toggleServiceStation()">
+           <input type="checkbox" ng-model="autoServiceStation">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

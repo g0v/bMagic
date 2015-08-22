@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="org.apache.cordova.plugin.parse.ParseInstallation"
+    version="0.1.12">
+
+    <name>cordovaParse</name>
+    <description>
+        This plugin will Parse installation
+    </description>
+    <license>MIT</license>
+
+    <engines>
+        <!--
+            Cordova 2.8.0 is all I have tested on - it should work fine with earlier versions.
+            Please modify the below line, test, and submit a PR if it works for you.
+        -->
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <js-module src="www/parse-1.5.0.min.js" name="Parse">
+       <runs />
+    </js-module>
+
+    <js-module src="www/ParseInstallation.js" name="ParseInstallation">
+       <clobbers target="ParseInstallation" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="ParseInstallation">
+                <param name="android-package" value="org.apache.cordova.plugin.parse.ParseInstallation"/>
+            </feature>
+            <feature name="PushPlugin">
+                <param name="android-package" value="org.apache.cordova.plugin.parse.PushPlugin"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+            <uses-permission android:name="android.permission.WAKE_LOCK" />
+            <uses-permission android:name="android.permission.VIBRATE"/>
+            <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+            <permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+            <uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity android:name="org.apache.cordova.plugin.parse.PushHandlerActivity" android:exported="true"/>
+            <receiver android:name="org.apache.cordova.plugin.parse.CordovaGCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
+                <intent-filter>
+                    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                    <category android:name="$PACKAGE_NAME" />
+                </intent-filter>
+            </receiver>
+            <service android:name="org.apache.cordova.plugin.parse.GCMIntentService" />
+        </config-file>
+
+        <source-file src="src/android/ParseInstallation.java" target-dir="src/org/apache/cordova/plugin/parse" />
+
+        <source-file src="src/android/libs/gcm.jar" target-dir="libs/" />
+        <source-file src="src/android/libs/android-support-v13.jar" target-dir="libs/" />
+        <source-file src="src/android/CordovaGCMBroadcastReceiver.java" target-dir="src/org/apache/cordova/plugin/parse" />
+        <source-file src="src/android/GCMIntentService.java" target-dir="src/org/apache/cordova/plugin/parse" />
+        <source-file src="src/android/PushHandlerActivity.java" target-dir="src/org/apache/cordova/plugin/parse" />
+        <source-file src="src/android/PushPlugin.java" target-dir="src/org/apache/cordova/plugin/parse" />
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <plugins-plist key="ParseInstallation" string="ParseInstallation" />
+
+        <config-file target="config.xml" parent="/*">
+            <feature name="ParseInstallation">
+                <param name="ios-package" value="ParseInstallation" />
+            </feature>
+            <feature name="PushPlugin">
+                <param name="ios-package" value="PushPlugin" />
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/ParseInstallation.h" />
+        <source-file src="src/ios/ParseInstallation.m" />
+
+        <header-file src="src/ios/PushPlugin.h" />
+        <source-file src="src/ios/PushPlugin.m" />
+
+        <header-file src="src/ios/AppDelegate+notification.h" />
+        <source-file src="src/ios/AppDelegate+notification.m" />
+    </platform>
+</plugin>

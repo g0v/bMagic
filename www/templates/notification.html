@@ -1,0 +1,60 @@
+<ion-view view-title="缺血提醒">
+  <ion-content>
+    <div class="list list-inset" ng-hide="saved">
+      <label class="item item-input item-select">
+        <div class="input-label">
+          捐血中心
+        </div>
+        <select ng-model="input.area" ng-options="area[key].info for key in areaIndex">
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          血型
+        </div>
+        <select ng-model="input.blood" ng-options="blood[key].display for key in bloodIndex">
+        </select>
+      </label>
+      <button class="button button-block button-positive" ng-click="listener()">
+        設定主動提醒
+      </button>
+    </div>
+    <div class="list list-inset" ng-show="saved">
+      <label class="item">
+        {{ area[input.area].display }}
+        <span class="item-note">
+          地區
+        </span>
+      </label>
+      <label class="item">
+        {{ blood[input.blood].display }}
+        <span class="item-note">
+          血型
+        </span>
+      </label>
+      <button class="button button-block button-assertive" ng-click="unListener()">
+        刪除主動提醒
+      </button>
+    </div>
+    <div class="list list-inset" ng-show="saved">
+      <label class="item item-input item-select">
+        <div class="input-label">
+          延後提醒
+        </div>
+        <select ng-model="input.delayDays">
+          <option value="1">1天</option>
+          <option value="3">3天</option>
+          <option value="7">7天</option>
+          <option value="14">14天</option>
+          <option value="30">30天</option>
+          <option value="60">60天</option>
+          <option value="90">90天</option>
+          <option value="120">120天</option>
+        </select>
+      </label>
+      <button class="button button-block button-positive" ng-click="delay()">
+        設定 {{ input.delayDays | delayDate | date:'yyyy-MM-dd' }} 之前勿擾
+      </button>
+    </div>
+  </ion-content>
+</ion-view>

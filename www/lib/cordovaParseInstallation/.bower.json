@@ -1,0 +1,13 @@
+{
+  "name": "cordovaParseInstallation",
+  "_release": "39c598a5ad",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "39c598a5ad60331be69082e33c9a710c1b927624"
+  },
+  "_source": "/Users/mtk09425/Develop/cordovaParseInstallation",
+  "_target": "*",
+  "_originalSource": "../../cordovaParseInstallation/",
+  "_direct": true
+}

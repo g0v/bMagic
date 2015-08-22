@@ -1,0 +1,22 @@
+<ion-view view-title="即時資訊">
+  <ion-nav-buttons side="right">
+    <button class="button button-icon button-clear ion-refresh" ng-click="reload()"></button>
+  </ion-nav-buttons>
+  <ion-content>
+    <ion-refresher
+      pulling-text="下拉更新存量"
+      on-refresh="reload()">
+    </ion-refresher>
+    <div class="card" ng-repeat="areaKey in areaIndex">
+      <div class="item item-text-wrap">
+        {{ area[areaKey].display }}
+        <div class="row">
+          <div class="col" ng-repeat="bloodKey in bloodIndex">
+            <div class="light-labal">{{ blood[bloodKey].display }}</div>
+            <div class="light light-{{ bloodStorages[areaKey][bloodKey] }}">{{ bloodStorages[areaKey][bloodKey] | bloodStorage }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
